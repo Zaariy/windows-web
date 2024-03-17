@@ -1,0 +1,3 @@
+.br {
+    width: calc(100% - attr(data-att));
+}

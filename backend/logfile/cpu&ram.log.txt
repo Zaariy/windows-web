@@ -1,0 +1,1 @@
+{"Interval":1000,"RAM_Usage":"65.67%","CPU_Usage":"25.48%"}
