@@ -12,6 +12,8 @@ import {
     cleanDesktop
 } from "../../Services/windowUiStructure";
 
+import {createFolder , cleanFileSystemState} from "../../Services/windowsFileSys/index";
+
 import type { windowAppType } from "../../Services/windowUiStructure";
 // window test
 import { TaskBar } from "../../components/taskbar";
@@ -21,6 +23,7 @@ import {globalIcons} from "../../FileSystem/windowIcons/index";
 import {systemInformation} from "../../programmes/windowInfo/index" ;
 import {taskmanger} from "../../programmes/taskmanger/index" ;
 import { textEditor } from "../../programmes/texteditor";
+
 
 // import img background Testing
 const   BACKGROUNDIMAGE =  require("../../FileSystem/background/background.jpg");
@@ -33,9 +36,16 @@ export  const RootWindow =  () => {
             windowSize : state.windowSettings.screenSize ,
             backgroundImage : state.windowSettings.backgroundImage,
             runningApps : state.windowSettings.runningApps ,
-            desktopApps : state.windowSettings.desktopApps
+            desktopApps : state.windowSettings.desktopApps,
         }
     })
+    // for testing
+    const FileSystemGlobalState = useSelector((state:RootState) => {
+        return {
+            rootFolder : state.fileSysSlice.rootFolder 
+        }
+    })
+ 
 
     // Dispatch Action
     const dispatch =  useDispatch()
@@ -59,9 +69,13 @@ export  const RootWindow =  () => {
         dispatch(pushDesktopApp({appIcon : globalIcons.taskMangerIcon , appName:"Task manager" , data : taskmanger }))
         // add Text Editor App To Desktop
         dispatch(pushDesktopApp({appIcon : globalIcons.textEditorIcon , appName:"Text Editor" , data : textEditor }))
-        
-
+       
+        // createFiles and folders for testing
+        dispatch(createFolder({folderName : 'Desktop' }));
+        dispatch(createFolder({folderName : 'Media' , path :'/Desktop' }));
         return () => {
+            // cleanFileSystemState() for testing
+            dispatch(cleanFileSystemState()) ;
             dispatch(clean()) ;
             dispatch(cleanDesktop()) ;
         }
@@ -87,7 +101,7 @@ export  const RootWindow =  () => {
     }
 
     return (
-        <div  className="relative h-full w-full" style={{width: oneGlobalState.windowSize.width , height: oneGlobalState.windowSize.height}}>
+        <div  className="relative h-full w-full overflow-hidden" style={{width: oneGlobalState.windowSize.width , height: oneGlobalState.windowSize.height}}>
             <img src={oneGlobalState.backgroundImage} alt="background" className="w-full h-full z-0"></img>
         <div  className="z-5 absolute top-0 ">
             <div className="flex flex-col">
