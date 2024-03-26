@@ -64,6 +64,10 @@ const FileSysSlice =  createSlice({
           }
 
         },
+        searchByName: (state ) => {
+           const tree =  new Tree(state.rootFolder); 
+           console.log(tree.search('Deskto')); 
+        },
         cleanFileSystemState: (state) => {
           state.rootFolder =  [];
         }
@@ -71,5 +75,5 @@ const FileSysSlice =  createSlice({
 }) 
 
 
-export const {createFolder , cleanFileSystemState} = FileSysSlice.actions ;
+export const {createFolder , cleanFileSystemState , createFile , searchByName} = FileSysSlice.actions ;
 export default FileSysSlice.reducer ;

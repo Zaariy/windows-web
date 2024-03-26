@@ -12,7 +12,7 @@ import {
     cleanDesktop
 } from "../../Services/windowUiStructure";
 
-import {createFolder , cleanFileSystemState} from "../../Services/windowsFileSys/index";
+import {createFolder , cleanFileSystemState  ,createFile, searchByName} from "../../Services/windowsFileSys/index";
 
 import type { windowAppType } from "../../Services/windowUiStructure";
 // window test
@@ -23,6 +23,7 @@ import {globalIcons} from "../../FileSystem/windowIcons/index";
 import {systemInformation} from "../../programmes/windowInfo/index" ;
 import {taskmanger} from "../../programmes/taskmanger/index" ;
 import { textEditor } from "../../programmes/texteditor";
+import {fileExplorer}  from "../../programmes/fileExplorer/index";
 
 
 // import img background Testing
@@ -69,19 +70,27 @@ export  const RootWindow =  () => {
         dispatch(pushDesktopApp({appIcon : globalIcons.taskMangerIcon , appName:"Task manager" , data : taskmanger }))
         // add Text Editor App To Desktop
         dispatch(pushDesktopApp({appIcon : globalIcons.textEditorIcon , appName:"Text Editor" , data : textEditor }))
-       
-        // createFiles and folders for testing
-        dispatch(createFolder({folderName : 'Desktop' }));
-        dispatch(createFolder({folderName : 'Media' , path :'/Desktop' }));
+        // add fileExplorer App To Desktop 
+        dispatch(pushDesktopApp({appIcon : globalIcons.fileExplorerIcon, appName:"File Explorer" , data: fileExplorer }))
+
+        
+        // start create Main or Root folders
+        
+        dispatch(createFolder({folderName:"Desktop"}));
+        dispatch(createFolder({folderName:"Downloads"}));
+        dispatch(createFolder({folderName:"Music"}));
+        dispatch(createFolder({folderName:"Photos"}));
+        dispatch(createFile({folderName:"file.txt"}));
+
         return () => {
-            // cleanFileSystemState() for testing
             dispatch(cleanFileSystemState()) ;
             dispatch(clean()) ;
             dispatch(cleanDesktop()) ;
         }
     } , [])
+    useEffect(() => {dispatch(searchByName())} ,[]) 
     
-    
+    console.log(FileSystemGlobalState.rootFolder); 
     const setSizeofRootWindow =  (width?: number,  height?: number ) => {
         if(width && height) {
             dispatch(setScreenSize({width : width , height : height}))
