@@ -20,11 +20,13 @@ function OpenedWindowsDisplay(props : propsType){
     // serch for the app by id  for get its Icon and its Name 
     const result = findAppById(id , apps);
 
-    return (
-          <li className="w-[200px] flex items-center h-[40px] bg-[#8B93FF]  text-black font-bold rounded-md mx-[5px] px-[5px]">
-              <img  className="w-[25px]" src={result.appIcon} alt={result.appName} />
-              <p className="pl-[5px]">{result.appName}</p>
-          </li>
+    return ( result ? (
+              <li className="w-[200px] flex items-center h-[40px] bg-[#8B93FF]  text-black font-bold rounded-md mx-[5px] px-[5px]">
+                  <img  className="w-[25px]" src={result.appIcon} alt={result.appName} />
+                  <p className="pl-[5px]">{result.appName}</p>
+              </li>
+            ) : null
+    
         ); 
 }
 

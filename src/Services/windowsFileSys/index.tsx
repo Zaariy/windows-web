@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {Tree} from "../../DataStructure/virtualFileSysTree/index"
+
 interface NodeFile {
   id: string | null , 
   name: string | null ,
@@ -25,10 +26,12 @@ type fileType  =  folderType & {
 
 
 type initType  = {
-  rootFolder :  NodeFolder[] 
+  rootFolder :  (NodeFolder | NodeFile )[], 
+  recent :  NodeFolder[] 
 }
 const initialState   = {
-    rootFolder : []
+    rootFolder : [],
+    recent : []
 }
 
 // const filesSysTree = new Tree();
@@ -64,16 +67,27 @@ const FileSysSlice =  createSlice({
           }
 
         },
+        setRecentFolders : (state, action :PayloadAction<NodeFolder[]>) => {
+            const mainFolders:string[] = ["Desktop" , "Downloads" , "Music" , "Photos"];
+            state.recent = action.payload.filter(e => mainFolders.includes(e.name)); 
+        },
         searchByName: (state ) => {
            const tree =  new Tree(state.rootFolder); 
-           console.log(tree.search('Deskto')); 
         },
+        setDataToFile: (state , action) => {
+            const tree =  new Tree(state.rootFolder); 
+            const file = tree.searchById(action.payload.id)[0];
+            file.data =  action.payload.data;
+            state.rootFolder =  tree.root.folders;
+        },
+
         cleanFileSystemState: (state) => {
           state.rootFolder =  [];
+          // state.recent =  [];
         }
      }
 }) 
 
 
-export const {createFolder , cleanFileSystemState , createFile , searchByName} = FileSysSlice.actions ;
+export const {createFolder , cleanFileSystemState , createFile , searchByName , setRecentFolders , setDataToFile} = FileSysSlice.actions ;
 export default FileSysSlice.reducer ;

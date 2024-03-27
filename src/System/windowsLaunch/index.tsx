@@ -12,7 +12,7 @@ import {
     cleanDesktop
 } from "../../Services/windowUiStructure";
 
-import {createFolder , cleanFileSystemState  ,createFile, searchByName} from "../../Services/windowsFileSys/index";
+import {createFolder , cleanFileSystemState  ,createFile, searchByName, setRecentFolders} from "../../Services/windowsFileSys/index";
 
 import type { windowAppType } from "../../Services/windowUiStructure";
 // window test
@@ -24,7 +24,6 @@ import {systemInformation} from "../../programmes/windowInfo/index" ;
 import {taskmanger} from "../../programmes/taskmanger/index" ;
 import { textEditor } from "../../programmes/texteditor";
 import {fileExplorer}  from "../../programmes/fileExplorer/index";
-
 
 // import img background Testing
 const   BACKGROUNDIMAGE =  require("../../FileSystem/background/background.jpg");
@@ -40,10 +39,10 @@ export  const RootWindow =  () => {
             desktopApps : state.windowSettings.desktopApps,
         }
     })
-    // for testing
+    // File system
     const FileSystemGlobalState = useSelector((state:RootState) => {
         return {
-            rootFolder : state.fileSysSlice.rootFolder 
+            rootFolder : state.fileSysSlice.rootFolder, 
         }
     })
  
@@ -80,7 +79,8 @@ export  const RootWindow =  () => {
         dispatch(createFolder({folderName:"Downloads"}));
         dispatch(createFolder({folderName:"Music"}));
         dispatch(createFolder({folderName:"Photos"}));
-        dispatch(createFile({folderName:"file.txt"}));
+        dispatch(createFile({folderName:"file1.txt"}));
+        dispatch(createFile({folderName:"file2.txt"}));
 
         return () => {
             dispatch(cleanFileSystemState()) ;
@@ -88,9 +88,17 @@ export  const RootWindow =  () => {
             dispatch(cleanDesktop()) ;
         }
     } , [])
-    useEffect(() => {dispatch(searchByName())} ,[]) 
-    
-    console.log(FileSystemGlobalState.rootFolder); 
+
+    useEffect(() => {
+      dispatch(searchByName())
+    } ,[]) 
+
+    useEffect(() => {
+      // set the main folders or  recent folder  
+        dispatch(setRecentFolders(FileSystemGlobalState.rootFolder));
+    } , [FileSystemGlobalState.rootFolder])
+
+
     const setSizeofRootWindow =  (width?: number,  height?: number ) => {
         if(width && height) {
             dispatch(setScreenSize({width : width , height : height}))
@@ -129,7 +137,7 @@ export  const RootWindow =  () => {
             })}
         </div>
         </div>
-        <TaskBar />
+         <TaskBar /> 
         </div>
         )
 }

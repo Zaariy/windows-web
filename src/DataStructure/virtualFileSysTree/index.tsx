@@ -59,7 +59,9 @@ export  class Tree {
       this.root = { folders: [] };
     }
   }
-  
+  setTree(tree : (NodeFile | NodeFolder)[]){
+    this.root = {folders : tree} ;
+  } 
   createFolder(folderName: string | null, path: string | null = null) {
     const newFolder = new NodeFolder();
     newFolder.setData(generateId() , folderName , null)
@@ -132,10 +134,10 @@ export  class Tree {
     return { status: true, path: p };
   }
 
-  search(name: string, path: string | null = null) {
+  searchByName(name: string, path: string | null = null) {
     let results:[] = [];
     if (!path) {
-      this.searchInNode(this.root.folders, name, results);
+      this.searchByNameInNode(this.root.folders, name, results);
     } else {
       let splitPathArray = path.split('/').filter((item) => item !== "");
       let current = this.root.folders;
@@ -147,18 +149,49 @@ export  class Tree {
         }
         current = current[index].data;
       }
-      this.searchInNode(current, name, results);
+      this.searchByNameInNode(current, name, results);
     }
     return results;
   }
 
-  private searchInNode(node: NodeFile[], name: string, results: NodeFile[]) {
+  private searchByNameInNode(node: NodeFile[], name: string, results: NodeFile[]) {
     for (let i = 0; i < node.length; i++) {
       if (node[i].name === name) {
         results.push(node[i]);
       }
       if (node[i].type === "folder") {
-        this.searchInNode(node[i].data as NodeFile[], name, results);
+        this.searchByNameInNode(node[i].data as NodeFile[], name, results);
+      }
+    }
+  }
+
+  searchById(id: string, path: string | null = null) {
+    let results:[] = [];
+    if (!path) {
+      this.searchByIdInNode(this.root.folders, id, results);
+    } else {
+      let splitPathArray = path.split('/').filter((item) => item !== "");
+      let current = this.root.folders;
+      for (let i = 0; i < splitPathArray.length; i++) {
+        let folderName = splitPathArray[i];
+        let index = current.findIndex(folder => folder.name === folderName);
+        if (index === -1) {
+          return [];
+        }
+        current = current[index].data;
+      }
+      this.searchByIdInNode(current, id, results);
+    }
+    return results;
+  }
+
+  private searchByIdInNode(node: NodeFile[], id: string, results: NodeFile[]) {
+    for (let i = 0; i < node.length; i++) {
+      if (node[i].id === id) {
+        results.push(node[i]);
+      }
+      if (node[i].type === "folder") {
+        this.searchByIdInNode(node[i].data as NodeFile[], id, results);
       }
     }
   }

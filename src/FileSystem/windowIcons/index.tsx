@@ -23,6 +23,7 @@ export const globalIcons =  {
     rightArrow : require("../../FileSystem/background/icons/icons8-arrow-30-left.png"),
     reloadIcon : require("../../FileSystem/background/icons/icons8-reload-32.png"),
     downArrow : require("../../FileSystem/background/icons/icons8-down-arrow-50.png"),
+    file96 : require("../../FileSystem/background/icons/file96.png"),
 }
 
 export const matchIcon =  (name : string) => {
