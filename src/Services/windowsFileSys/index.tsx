@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {Tree} from "../../DataStructure/virtualFileSysTree/index"
+import {Tree} from "../../DataStructure/virtualFileSysTree/index";
+import {HistoryManager} from "../../DataStructure/histroy/index";
 
 interface NodeFile {
   id: string | null , 
@@ -27,11 +28,18 @@ type fileType  =  folderType & {
 
 type initType  = {
   rootFolder :  (NodeFolder | NodeFile )[], 
-  recent :  NodeFolder[] 
+  recent :  NodeFolder[], 
+  openedFolder : NodeFolder[], 
+  historyManager : HistoryManager | null
+  pathTracking:string ,
 }
 const initialState   = {
     rootFolder : [],
-    recent : []
+    recent : [],
+    openedFolder : [],
+    historyManager : new HistoryManager(),  
+    // Bug Need to fix #1
+    pathTracking: "",
 }
 
 // const filesSysTree = new Tree();
@@ -80,7 +88,27 @@ const FileSysSlice =  createSlice({
             file.data =  action.payload.data;
             state.rootFolder =  tree.root.folders;
         },
-
+        setOpenedFolder: (state , action ) => {
+          state.openedFolder =  action.payload
+        },
+        pushNodeToHistoryManager:(state , action) => {
+          const node:any = action.payload.node 
+          state.historyManager.addState(node)
+          const t =  node.name;
+          state.pathTracking =  `${state.pathTracking} / ${t}`;
+        },
+        goBackToThePreviosNode:(state) => {
+          const p:any = state.historyManager.goBack() ;
+          state.openedFolder = p  ;
+          // Need to add
+          state.pathTracking =  "";
+           
+        } ,
+        goForwardToTheNextNode: (state) => {
+          const node:any = state.historyManager.goForward();
+          state.openedFolder = node;  
+        },
+         
         cleanFileSystemState: (state) => {
           state.rootFolder =  [];
           // state.recent =  [];
@@ -89,5 +117,16 @@ const FileSysSlice =  createSlice({
 }) 
 
 
-export const {createFolder , cleanFileSystemState , createFile , searchByName , setRecentFolders , setDataToFile} = FileSysSlice.actions ;
+export const {
+  createFolder, 
+  cleanFileSystemState , 
+  createFile , 
+  searchByName , 
+  setRecentFolders , 
+  setDataToFile,
+  setOpenedFolder,
+  pushNodeToHistoryManager,
+  goBackToThePreviosNode ,
+  goForwardToTheNextNode ,
+  } = FileSysSlice.actions ;
 export default FileSysSlice.reducer ;

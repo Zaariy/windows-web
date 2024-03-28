@@ -24,6 +24,13 @@ export const globalIcons =  {
     reloadIcon : require("../../FileSystem/background/icons/icons8-reload-32.png"),
     downArrow : require("../../FileSystem/background/icons/icons8-down-arrow-50.png"),
     file96 : require("../../FileSystem/background/icons/file96.png"),
+    newFileIcon : require("../../FileSystem/background/icons/new-document.png"),
+    newFolderIcon : require("../../FileSystem/background/icons/new-folder.png"),
+    netBoxIcon : require("../../FileSystem/background/icons/netflix-icon.256x256.png"),
+    hashTagIcon : require("../../FileSystem/background/icons/hashtag.png"),
+    tecTacToeIcon : require("../../FileSystem/background/icons/tic-tac-toe.png"),
+    portFolioIcon : require("../../FileSystem/background/icons/portfolio.png")
+
 }
 
 export const matchIcon =  (name : string) => {

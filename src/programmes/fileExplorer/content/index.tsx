@@ -4,15 +4,20 @@ import {Folders} from "./folders";
 import {DisplayFolders} from "./displayFolder";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../Services/store";
+import {OperationBar} from "./operationBar";
 
 
 export function Content () {
   const fetchFiles =  useSelector((state:RootState) => {
       return {
         rootFolder : state.fileSysSlice.rootFolder,
-        recent : state.fileSysSlice.recent
+        recent : state.fileSysSlice.recent,
+        openedFolder : state.fileSysSlice.openedFolder, 
+        historyManger: state.fileSysSlice.historyManager,
+        pathTracking: state.fileSysSlice.pathTracking
       }
   });
+
   return (
     <div className=" flex h-full ">
        <div className=" bg-black text-white h-full ">
@@ -34,32 +39,14 @@ export function Content () {
           </div>
        </div>    
        <div className="text-white bg-[#111118] w-full">
-          <OperationBar />
+          <OperationBar fetchFiles={fetchFiles} />
           <div className="flex flex-wrap ml-6  mt-6">
-            <DisplayFolders  />
+            <DisplayFolders folders={fetchFiles}  />
           </div>
        </div>    
     </div>
     );
 };
 
-
-
-
-function OperationBar() {
-   return (
-      <div className="flex w-full justify-between items-center mt-5">
-        <div className="flex flex-2 w-[30%] items-center ">
-          <img className="cursor-pointer mx-6 h-[25px]" src={globalIcons.leftArrow} alt="left arrow" />
-          <img className="cursor-pointer mx-6 h-[25px]" src={globalIcons.rightArrow} alt="right arrow" />
-          <img className="cursor-pointer mx-6 h-[25px]" src={globalIcons.reloadIcon} alt="reload icon" />
-        </div>
-         <div className="search-file px-2 relative flex-1 w-[70%] ">
-            <input className="h-9 text-white outline-none rounded-md pl-2 w-full" name="search-file" type="text" defaultValue="Desktop > Files" />
-            <img  className="absolute w-[18px] top-[30%] right-[15px]" src={globalIcons.downArrow} alt="search icon" />
-          </div>
-      </div>
-   );
-}
 
 

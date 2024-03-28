@@ -12,7 +12,13 @@ import {
     cleanDesktop
 } from "../../Services/windowUiStructure";
 
-import {createFolder , cleanFileSystemState  ,createFile, searchByName, setRecentFolders} from "../../Services/windowsFileSys/index";
+import {
+  createFolder,
+  cleanFileSystemState,
+  createFile,
+  searchByName,
+  setRecentFolders
+  } from "../../Services/windowsFileSys/index";
 
 import type { windowAppType } from "../../Services/windowUiStructure";
 // window test
@@ -24,6 +30,12 @@ import {systemInformation} from "../../programmes/windowInfo/index" ;
 import {taskmanger} from "../../programmes/taskmanger/index" ;
 import { textEditor } from "../../programmes/texteditor";
 import {fileExplorer}  from "../../programmes/fileExplorer/index";
+import {netBox}  from "../../programmes/netBox/index";
+import {tecTacToeGame} from "../../programmes/ticTacToeGame/index";
+import {hashtag} from "../../programmes/hashtag/index";
+import {portFolio} from "../../programmes/portfolio/index";
+
+
 
 // import img background Testing
 const   BACKGROUNDIMAGE =  require("../../FileSystem/background/background.jpg");
@@ -64,23 +76,28 @@ export  const RootWindow =  () => {
     useEffect(() => {
         
         // Add windowInformation app to Desktop
-        dispatch(pushDesktopApp({appIcon : globalIcons.systemInformationIcon , appName:"system" , data : systemInformation }))
+        dispatch(pushDesktopApp({appIcon : globalIcons.systemInformationIcon , appName:"system" , data : systemInformation }));
         // add Task Manager App To Desktop
-        dispatch(pushDesktopApp({appIcon : globalIcons.taskMangerIcon , appName:"Task manager" , data : taskmanger }))
+        dispatch(pushDesktopApp({appIcon : globalIcons.taskMangerIcon , appName:"Task manager" , data : taskmanger }));
         // add Text Editor App To Desktop
-        dispatch(pushDesktopApp({appIcon : globalIcons.textEditorIcon , appName:"Text Editor" , data : textEditor }))
+        dispatch(pushDesktopApp({appIcon : globalIcons.textEditorIcon , appName:"Text Editor" , data : textEditor }));
         // add fileExplorer App To Desktop 
-        dispatch(pushDesktopApp({appIcon : globalIcons.fileExplorerIcon, appName:"File Explorer" , data: fileExplorer }))
-
+        dispatch(pushDesktopApp({appIcon : globalIcons.fileExplorerIcon, appName:"File Explorer" , data: fileExplorer }));
+        // add NetBox App To Desktop
+        dispatch(pushDesktopApp({appIcon : globalIcons.netBoxIcon, appName:"NetBox Movies" , data: netBox }));
+        // add Tic Tac Toe game To Desktop
+        dispatch(pushDesktopApp({appIcon : globalIcons.tecTacToeIcon, appName:"TecTacToe Game" , data: tecTacToeGame }));
+        // add Hashtag App To Desktop
+        dispatch(pushDesktopApp({appIcon : globalIcons.hashTagIcon, appName:"Hashtag " , data: hashtag }));
+        // add My PortFolio To Desktop
+        dispatch(pushDesktopApp({appIcon : globalIcons.portFolioIcon, appName:"My PortFolio" , data: portFolio }));
         
         // start create Main or Root folders
-        
         dispatch(createFolder({folderName:"Desktop"}));
         dispatch(createFolder({folderName:"Downloads"}));
         dispatch(createFolder({folderName:"Music"}));
         dispatch(createFolder({folderName:"Photos"}));
-        dispatch(createFile({folderName:"file1.txt"}));
-        dispatch(createFile({folderName:"file2.txt"}));
+
 
         return () => {
             dispatch(cleanFileSystemState()) ;
@@ -116,7 +133,6 @@ export  const RootWindow =  () => {
     const openApp =  (data: windowAppType) => {
         dispatch(pushNewWindowApp(data))
     }
-
     return (
         <div  className="relative h-full w-full overflow-hidden" style={{width: oneGlobalState.windowSize.width , height: oneGlobalState.windowSize.height}}>
             <img src={oneGlobalState.backgroundImage} alt="background" className="w-full h-full z-0"></img>
