@@ -1,13 +1,15 @@
 //File Path =>  Services/c_ui_structure  
 
-import { configureStore } from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit";
 import windowSettings from "./windowUiStructure" ;
+import FileSysSlice from "./windowsFileSys/index";
 
 
 
 export const store =  configureStore({
   reducer : {
     windowSettings : windowSettings ,
+    fileSysSlice : FileSysSlice,
   },
   // prevent an error
   middleware: getDefaultMiddleware =>

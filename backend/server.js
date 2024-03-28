@@ -37,7 +37,8 @@ app.get("/api/track" , async (req , res) => {
     let latest = null ;
     fs.writeFile(filePath , JSON.stringify(s.get(['cpu' , 'ram'])) , (err) => {
         if(err){
-            console.error(err) ;
+            // active on development
+            //console.error(err) ;
             return ;
         }
     
@@ -48,7 +49,6 @@ app.get("/api/track" , async (req , res) => {
             console.error(err) ;
             return;
         }
-        console.log(data) ;
         return data ;
     })
 

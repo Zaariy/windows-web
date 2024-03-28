@@ -1,3 +1,4 @@
+import "./main.css" ;
 import { useEffect , useState , useRef  } from "react";
 
 // import redux tools
@@ -57,13 +58,24 @@ export const Window =  (props : windowType) => {
 
 
     return(
-    <div  className="bg-white text-black  absolute"  style={{width: windowScreenSize.width , height : windowScreenSize.height - 50}} ref={windowRef}   >
-        <header className="bg-blue-200 w-full h-[40px] flex  justify-between align-center  " ref={windowHeaderReference} >
-            <p className="px-[5px] py-[5px]">{windowName}</p>
+    <div  className="bg-white text-black  absolute overflow-hidden rounded-xl "  style={{width: windowScreenSize.width , height : windowScreenSize.height - 50}} ref={windowRef}   >
+        <header className="bg-[#05060a] w-full h-[40px] flex  justify-between align-center rounded-t-xl  " ref={windowHeaderReference} >
+            <p className="px-[5px] text-white flex  items-center py-[5px]"><img className="h-[16px] mx-2" src={globalIcons.homeIcon} alt={'home'} /> {windowName}</p>
             <div className=" flex h-full items-center">
-                <button className="px-[10px] py-[5px]"><img className="w-[19px] h-full" src={globalIcons.subIcon} alt="sub icon" ></img></button>
-                <button onClick={fullScreenSize} className="px-[10px] py-[5px]"> <img className="w-[19px]" src={globalIcons.squareIcon} alt="square icon" ></img></button>
-                <button onClick={removeWindow} className="px-[10px] py-[5px] h-full hover:bg-red-700">X</button>
+                  <button className="px-[10px] py-[5px]">
+                    <div className="sub"></div> 
+                  </button>
+                  <button onClick={fullScreenSize} className="px-[10px] py-[5px]">
+                    <div className="square"></div> 
+                  </button>
+                <button onClick={removeWindow} className="px-[10px] py-[5px] h-full hover:bg-red-700">
+                  <div className="x-icon-div">
+                    <span className="span-one" >
+                    </span>
+                    <span className="span-tow" >
+                    </span>
+                  </div>
+                </button>
             </div>
         </header>
         <div className='w-full h-full'>

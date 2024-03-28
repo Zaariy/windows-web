@@ -1,0 +1,33 @@
+.x-icon-div {
+  width : 10px; 
+  height: 10px; 
+  position: relative ;
+}
+
+.span-one {
+  width: 1px;
+  height: 100%;
+  background-color: white ;
+  position : absolute;
+  transform: rotate(45deg);
+  
+}
+.span-tow {
+  width: 1px;
+  height: 100%;
+  background-color: white ;
+  position : absolute;
+  transform: rotate(135deg)
+}
+
+.square {
+  width: 10px ; 
+  height: 10px ; 
+  border:1px solid white ;
+}
+
+.sub {
+  width: 10px ; 
+  height: 1px ; 
+  background-color: white;
+}

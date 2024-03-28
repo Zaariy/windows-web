@@ -1,7 +1,8 @@
 import { Editor } from "@tinymce/tinymce-react";
 
 
-export const Content  = () => {
+export const Content  = (props) => {
+    
 
    return (
     <Editor
@@ -15,11 +16,11 @@ export const Content  = () => {
           { value: 'First.Name', title: 'First Name' },
           { value: 'Email', title: 'Email' },
         ],
-
+        height: "700" ,
         ai_request: (request: any, respondWith :any) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
       }}
-      initialValue={localStorage.getItem("dataContent") || ''}
-      onEditorChange={(e) => localStorage.setItem("dataContent" , e)}
+      initialValue={props.prop.initData ? props.prop.initData : ""}
+      onEditorChange={(e) => props.prop.getData ? props.prop.getData(e) : null}
 
     />
   ); 

@@ -3,7 +3,7 @@ import type {T} from "../type"
 
 
 export const Content = (props : {data : T | undefined}) => {
-    const data =  props?.data ; 
+    const {data} =  props ; 
 
     return (
     <div className="w-full  h-[90%] pl-[15px] mt-[10px] truncate">

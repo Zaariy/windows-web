@@ -8,7 +8,8 @@ export const fetchSystemData =  async (setFunction : (result : T) => void , cb: 
         setFunction(result);
         cb();
     }catch(error) {
-        console.log("field : " , error)
+        // active on development
+        // console.log("field : " , error)
     }
 
 }

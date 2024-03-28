@@ -4,10 +4,10 @@ import { generateId } from "../../globalFunctionHelper"
 
 const generateID =  generateId();
 
-const  TextEditor = () => {
+export const  TextEditor = (props) => {
     return  (
-        <Window key={generateID} id={generateID} width={1000} height={700} windowName="Text editor" >
-            <Content />
+        <Window key={generateID} id={props.windowId ? props.windowId : generateID} width={1000} height={700} windowName={`Text editor [${props.fileName}]`} >
+            <Content prop={{ initData:props.initData , getData : props.getData}} />
         </Window>
     )
 }
