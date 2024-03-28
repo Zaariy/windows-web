@@ -38,7 +38,7 @@ class NodeFolder extends NodeFile {
 
 
   setData(id: string | null ,name: string | null, data: (NodeFile | NodeFolder)[] | null) {
-    this.id =  id ,
+    this.id =  id ;
     this.name = name;
     this.path = `/${name}`;
     if(data){
@@ -59,10 +59,10 @@ export  class Tree {
       this.root = { folders: [] };
     }
   }
-  setTree(tree : (NodeFile | NodeFolder)[]){
+  setTree(tree : (NodeFile | NodeFolder)[]) : void{
     this.root = {folders : tree} ;
   } 
-  createFolder(folderName: string | null, path: string | null = null) {
+  createFolder(folderName: string | null, path: string | null = null): void {
     const newFolder = new NodeFolder();
     newFolder.setData(generateId() , folderName , null)
     let p: string | null = null;
@@ -79,31 +79,30 @@ export  class Tree {
       let y = 0;
       let current = this.root.folders;
       while (x < current.length) {
-        if (splitPathArry[y] != current[x].name) {
+        if (splitPathArry[y] !== current[x].name) {
           x += 1;
         } else {
           if (y == splitPathArry.length - 1) {
             current[x].data.push(newFolder);
             this.setDeepPath(newFolder.name);
-            return { status: true, path: splitPathArry.join('/') }
+            return 
           }
           current = current[x].data;
           x = 0;
           y += 1;
         }
       }
-      return { status: false, path: splitPathArry.join('/'), error: `Error this path : ${splitPathArry.join('/')} Not found` };
+      return 
     }
     //  add within the root 
     this.root.folders.push(newFolder);
-    return { status: true, path: p };
   }
 
-  createFile(fileName: string, data: any | null = null, path: string | null = null) {
+  createFile(fileName: string, data: any | null = null, path: string | null = null): void {
     const newFile = new NodeFile();
     newFile.setData(generateId(), fileName, data);
     let p: string | null = null;
-    if (path == null) {
+    if (path === null) {
 
       this.root.folders.push(newFile);
       return;
@@ -115,23 +114,22 @@ export  class Tree {
       let y = 0;
       let current = this.root.folders;
       while (x < current.length) {
-        if (splitPathArry[y] != current[x].name) {
+        if (splitPathArry[y] !== current[x].name) {
           x += 1;
         } else {
           if (y == splitPathArry.length - 1) {
             current[x].data.push(newFile);
-            return { status: true, path: splitPathArry.join('/') }
+            return 
           }
           current = current[x].data;
           x = 0;
           y += 1;
         }
       }
-      return { status: false, path: splitPathArry.join('/'), error: `Error this path : ${splitPathArry.join('/')} Not found` };
+      return 
     }
     //  add within the root 
     this.root.folders.push(newFile);
-    return { status: true, path: p };
   }
 
   searchByName(name: string, path: string | null = null) {
@@ -185,7 +183,7 @@ export  class Tree {
     return results;
   }
 
-  private searchByIdInNode(node: NodeFile[], id: string, results: NodeFile[]) {
+  private searchByIdInNode(node: NodeFile[], id: string, results: NodeFile[]) : void{
     for (let i = 0; i < node.length; i++) {
       if (node[i].id === id) {
         results.push(node[i]);
@@ -194,11 +192,6 @@ export  class Tree {
         this.searchByIdInNode(node[i].data as NodeFile[], id, results);
       }
     }
-  }
-
-  returnObject() {
-
-    return this.root;
   }
 
   setDeepPath(name: string | null) {
@@ -211,7 +204,7 @@ export  class Tree {
     return results;
   }
 
-  private traverse(node: NodeFile[], results: NodeFile[]) {
+  private traverse(node: NodeFile[], results: NodeFile[]): void {
     for (const item of node) {
       results.push(item);
       if (item.type === 'folder') {
