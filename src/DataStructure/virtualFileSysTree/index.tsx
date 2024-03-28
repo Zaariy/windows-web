@@ -85,18 +85,17 @@ export  class Tree {
           if (y == splitPathArry.length - 1) {
             current[x].data.push(newFolder);
             this.setDeepPath(newFolder.name);
-            return { status: true, path: splitPathArry.join('/') }
+            return 
           }
           current = current[x].data;
           x = 0;
           y += 1;
         }
       }
-      return { status: false, path: splitPathArry.join('/'), error: `Error this path : ${splitPathArry.join('/')} Not found` };
+      return 
     }
     //  add within the root 
     this.root.folders.push(newFolder);
-    return { status: true, path: p };
   }
 
   createFile(fileName: string, data: any | null = null, path: string | null = null) {
@@ -120,18 +119,17 @@ export  class Tree {
         } else {
           if (y == splitPathArry.length - 1) {
             current[x].data.push(newFile);
-            return { status: true, path: splitPathArry.join('/') }
+            return 
           }
           current = current[x].data;
           x = 0;
           y += 1;
         }
       }
-      return { status: false, path: splitPathArry.join('/'), error: `Error this path : ${splitPathArry.join('/')} Not found` };
+      return 
     }
     //  add within the root 
     this.root.folders.push(newFile);
-    return { status: true, path: p };
   }
 
   searchByName(name: string, path: string | null = null) {
